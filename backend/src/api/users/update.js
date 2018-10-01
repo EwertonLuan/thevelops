@@ -4,6 +4,7 @@ export default async (req, res) => {
     const { id } = req.params;
     
     try {
+        //Finds a user by id and update
         result = await User.findByIdAndUpdate(id, req.body,
             {new:true},
             (err, todo) => {

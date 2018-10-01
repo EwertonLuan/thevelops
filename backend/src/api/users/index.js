@@ -12,7 +12,7 @@ router.get('/', findAll);
 //GET http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
 router.get('/:id', findOne);
 //POST http://localhost:9000/api/users/
-router.post('/', create);
+router.post('/signup', create);
 //DELETE http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
 router.delete('/:id', remove);
 //PUT http://localhost:9000/api/users/5bac1f4980701043b4bb0b80

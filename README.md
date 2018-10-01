@@ -11,7 +11,7 @@ Into the folders backend and frontend, run the comand:
 $ npm install 
 ```
  
-Start the server with command:
+Start the server in the folder backend with command:
  ```sh
  $ npm run dev
  ```

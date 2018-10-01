@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 
+//link to connect with mongodb
 mongoose.connect('mongodb://localhost:27017/thevelops-users', { useNewUrlParser: true });
 routes(app);
 
-app.listen(9000, () => console.log('Express server started...'));
+app.listen(5000, () => console.log('Express server started...'));
