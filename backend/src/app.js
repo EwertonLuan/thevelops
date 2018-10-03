@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import cors from 'cors';
+// import cors from 'cors';
 import routes from './api';
 import config from './config'
 
@@ -14,7 +14,13 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(cors());
+// app.use(cors());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    next();
+  });
 
 //auth route
 // app.use('/auth', auth)

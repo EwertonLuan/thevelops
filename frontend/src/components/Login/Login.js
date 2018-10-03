@@ -73,7 +73,7 @@ handleSubmit(e) {
     };
     console.log(JSON.stringify(dataToSend))
     //url da api para realizar post
-    let url = 'http://localhost:5000/api/users/auth';
+    let url = 'http://localhost:4000/api/users/auth';
 
     //encaminha o post para o backend
     fetch(url, {
@@ -145,7 +145,7 @@ handlePasswordChange(e) {
                                         </label>
                                     </div>
                                     <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</button>
-                                    <small id="emailHelp" className="form-text text-muted">If you are not registered. Plese <a href="#" data-toggle="modal" data-target="#signupModel" data-whatever="@mdo" >Signup</a></small>
+                                    <small id="emailHelp" className="form-text text-muted">If you are not registered. Plese <a href="/signup" data-toggle="modal" data-target="#signupModel" data-whatever="@mdo" >Signup</a></small>
                                     <br />
                                     
                                 </form>

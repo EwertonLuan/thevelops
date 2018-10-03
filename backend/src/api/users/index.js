@@ -6,9 +6,10 @@ import remove from './remove';
 import update from './update';
 import findUser from './find-one'
 import auth from './auth';
+import verifyToken from './verify-token'
 
 const router = Router();
-
+router.get('/verify', verifyToken)
 //GET http://localhost:9000/api/users/
 router.get('/', findAll);
 //GET http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
@@ -23,4 +24,6 @@ router.put('/:id', update);
 router.post('/auth', auth) 
 //POST http://localhost:9000/api/users/login
 router.post('/login', findUser)
+//POST http://localhost:9000/api/users/login
+
 export default router;

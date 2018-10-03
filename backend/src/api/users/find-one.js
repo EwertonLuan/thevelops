@@ -7,7 +7,7 @@ export default async (req, res, next) => {
     const { email, password } = req.body;
     
     try {
-        //Verificar se realmente foi enviado um email e senha
+        //Find a user by email
         if( email === undefined || password === undefined ){
             res.status(401).json({
                 success: false,
@@ -28,7 +28,7 @@ export default async (req, res, next) => {
             const tokenData = {                    
                     email,
                 }        
-            const generatedToken = jwt.sign(tokenData, config.JWT_KEY, {  expiresIn: '10m'});
+            const generatedToken = jwt.sign(tokenData, config.JWT_KEY, {  expiresIn: '1m'});
             res.json({
                 success: true,
                 token: generatedToken
@@ -38,10 +38,10 @@ export default async (req, res, next) => {
                     success: false,
                     code: 'DD101_API_ERROR_02',
                     message: 'User does not exists.'
-                })
+                   })
+                }
             }
-        }
-    } catch (error) {
+        } catch (error) {
         return res.status(500).json({ error: 'Senha invalida' });
     }
-}
+}       

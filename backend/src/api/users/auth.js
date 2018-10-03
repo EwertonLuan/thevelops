@@ -4,7 +4,7 @@ import config from './../../config'
 import bcrypt from 'bcrypt'
 
 export default async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body.user;
     
     try {
         //Verificar se realmente foi enviado um email e senha
