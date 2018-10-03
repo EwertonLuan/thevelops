@@ -1,16 +1,7 @@
+
 import React, { Component } from 'react';
 import { create } from './API';
-import {
-    Container,
-    Row,
-    Col,
-    Button,
-    Form,
-    FormGroup,
-    Input,
-    Label
-} from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 class NewUser extends Component {
@@ -20,10 +11,10 @@ class NewUser extends Component {
             first_name: '',
             last_name: '',
             personal_phone: '',
-            password:''
+            password:'',
         }
     }
-    onEmailChange = ({ target }) => {
+    hanleEmailChange = ({ target }) => {
         const { email, value } = target;
         const { user } =  this.state;
         this.setState( email, () => {
@@ -31,7 +22,7 @@ class NewUser extends Component {
         });
         
     }
-    onFirstChange = ({ target }) => {
+    hanleFirstChange = ({ target }) => {
         const { first_name, value } = target;
         const { user } = this.state;
         this.setState( first_name, () => {
@@ -40,7 +31,7 @@ class NewUser extends Component {
         
     }
 
-    onLastChange = ({ target }) => {
+    hanleLastChange = ({ target }) => {
         const { last_name, value } = target;
         const { user } =   this.state;
         this.setState( last_name, () => {
@@ -49,7 +40,7 @@ class NewUser extends Component {
         
 
     }
-    onChange_password = ({ target }) => {
+    hanlePasswordChange = ({ target }) => {
         const { password, value } = target;
         const { user } =   this.state;
         
@@ -58,8 +49,16 @@ class NewUser extends Component {
         });
         
     }
+    // hanlePasswordConfirmChange = ({ target }) => {
+    //     const { password_confirm, value } = target;
+    //     const { user } =   this.state;
+        
+    //     this.setState(password_confirm, () => {
+    //         user.password_confirm = value;
+    //     });
+    // }
 
-    onPersonalPhoneChange = ({ target }) => {
+    handlePersonalPhoneChange = ({ target }) => {
         const { personal_phone, value } = target;
         const { user } = this.state;
         this.setState(personal_phone, () =>{
@@ -69,7 +68,7 @@ class NewUser extends Component {
         
     }
 
-    onSubmit = async (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone, password } = this.state.user;
         console.log(this.state.user)
@@ -81,46 +80,56 @@ class NewUser extends Component {
             console.log('Error', error);
         }
     }
-
     render() {
         
         return (
-            <Container>
-                <Row>
-                    <Col xs="12" sm="12" md="12" lg="12">
-                        <Form>
-                            <FormGroup>
-                                <Label> email:</Label>
-                                <Input type="text" name="email" onChange={this.onEmailChange} placeholder="Enter a user email" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> First:</Label>
-                                <Input type="text" name="first_name" onChange={this.onFirstChange} placeholder="Enter a user firt" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Last:</Label>
-                                <Input type="text" name="first_last" onChange={this.onLastChange} placeholder="Enter a user last" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Phone:</Label>
-                                <Input type="text" name="phone" onChange={this.onPersonalPhoneChange} placeholder="Enter a user phone" />
-                            </FormGroup>                             
-                            <FormGroup>
-                                <Label> Password:</Label>
-                                <Input type="password" name="password" onChange={this.onChange_password} placeholder="Enter a user password" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Link to="/home">
-                                    <Button action="/home" color="primary" onClick={this.onSubmit}>Create new Bill</Button>
-                                </Link>
-                                <Link to="/users" className="btn btn-secondary">Back to list</Link>
-                            </FormGroup>
-                        </Form>
-                    </Col>
-                </Row>
-            </Container>
-        )
-    }
+                <div className="row" style={{ paddingTop: '50px' }}>
+                <div className="col">
+                </div>
+                <div className="col">
+                    <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                        
+                        <div className="card-body">
+                            <form>
+                                <div className="form-group">
+                                    <label htmlFor="exampleInputEmail1">Email address</label>
+                                    <input type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="exampleInputEmail1">Firt Name</label>
+                                    <input type="text" onChange={this.hanleFirstChange} className="form-control" id="firstname" aria-describedby="firshelp" placeholder="Enter email" />
+                                </div>
+                                <div className="form-group">
+                                    <label >Last Name</label>
+                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="lastname" aria-describedby="lasthelp" placeholder="Enter email" />
+                                </div>
+                                <div className="form-group">
+                                    <label >Personal Phone</label>
+                                    <input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="personaphone" aria-describedby="phoneHelp" placeholder="Enter email" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="exampleInputPassword1">Password</label>
+                                    <input type="password" onChange={this.hanlePasswordChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                </div>
+                                {/* <div className="form-group">
+                                    <label htmlFor="exampleInputPassword1"> Confirm Password</label>
+                                    <input type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="exampleInputPassword2" placeholder="Password" />
+                                </div> */}
+                                <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</button>
+                                <br />
+                                
+                            </form>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div className="col">
+                </div>
+            </div>
+
+    )}
 }
 
 export default withRouter(NewUser)

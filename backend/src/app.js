@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import cors from 'cors';
 import routes from './api';
+import config from './config'
+
 
 const app = express();
 
@@ -14,8 +16,20 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(cors());
 
+//auth route
+// app.use('/auth', auth)
 //link to connect with mongodb
-mongoose.connect('mongodb://localhost:27017/thevelops-users', { useNewUrlParser: true });
+mongoose.connect(config.MONGOOSE_KEY, { useNewUrlParser: true },(err) => {
+    if(!err){
+        console.log('Connection established to MongoDB.');
+        
+        
+    } else {
+        console.log('Not possible to established the connection to MongoDB.')
+    }
+
+});
 routes(app);
 
-app.listen(5000, () => console.log('Express server started...'));
+
+app.listen(4000, () => console.log('Express server started...'));

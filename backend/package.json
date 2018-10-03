@@ -10,7 +10,6 @@
     "test": "eslint . && jest tests/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
-    
   },
   "keywords": [],
   "author": "",
@@ -22,6 +21,7 @@
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "joigoose": "^4.0.2",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.17",
     "morgan": "^1.9.1"
   },
