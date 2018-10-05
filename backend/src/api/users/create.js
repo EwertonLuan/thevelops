@@ -1,8 +1,9 @@
 import User from './../../models/User';
 import bcrypt from 'bcrypt'
+import config from './../../config'
 
 //hash salt 
-const salt = bcrypt.genSaltSync(10)
+const salt = bcrypt.genSaltSync(config.JWT_SALT)
 
 export default async (req, res) => {
 

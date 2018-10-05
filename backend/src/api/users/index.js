@@ -7,6 +7,7 @@ import update from './update';
 import findUser from './find-one'
 import auth from './auth';
 import verifyToken from './verify-token'
+import updatePassword from './updatePassword'
 
 const router = Router();
 router.get('/verify', verifyToken)
@@ -14,12 +15,17 @@ router.get('/verify', verifyToken)
 router.get('/', findAll);
 //GET http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
 router.get('/:id', findOne);
+
 //POST http://localhost:9000/api/users/
 router.post('/', create);
+
 //DELETE http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
 router.delete('/:id', remove);
+
 //PUT http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
 router.put('/:id', update);
+router.put('/:id/change', updatePassword);
+
 //POST http://localhost:9000/api/users/auth
 router.post('/auth', auth) 
 //POST http://localhost:9000/api/users/login

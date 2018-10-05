@@ -12,7 +12,13 @@ class NewUser extends Component {
             last_name: '',
             personal_phone: '',
             password:'',
-        }
+            
+        },
+        password_confirm:'',
+        validate_pass:undefined,
+        error: undefined
+        
+        
     }
     hanleEmailChange = ({ target }) => {
         const { email, value } = target;
@@ -49,14 +55,14 @@ class NewUser extends Component {
         });
         
     }
-    // hanlePasswordConfirmChange = ({ target }) => {
-    //     const { password_confirm, value } = target;
-    //     const { user } =   this.state;
+    hanlePasswordConfirmChange = ({ target }) => {
+        const { password_confirm, value } = target;
+        const { user } =   this.state;
         
-    //     this.setState(password_confirm, () => {
-    //         user.password_confirm = value;
-    //     });
-    // }
+        this.setState(password_confirm, () => {
+            user.password_confirm = value;
+        });
+    }
 
     handlePersonalPhoneChange = ({ target }) => {
         const { personal_phone, value } = target;
@@ -68,10 +74,30 @@ class NewUser extends Component {
         
     }
 
+     validarSenha = () => {
+        const change = this.state.user
+        if(change.password === change.password_confirm){
+            this.setState({
+                validate_pass: true
+            })
+        }else{
+            this.setState({
+                validate_pass: false
+            })
+            alert("As senhas não são iguais")
+            return 
+        }
+    }
+
     handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone, password } = this.state.user;
         console.log(this.state.user)
+        this.validarSenha()
+        if(this.state.validate_pass === false){
+            return 
+        }else{ 
+        
         try {
             console.log("entrou no creat")
             const { data } = await create(email, first_name, last_name, personal_phone, password );            
@@ -79,6 +105,7 @@ class NewUser extends Component {
         } catch (error) {            
             console.log('Error', error);
         }
+    }
     }
     render() {
         
@@ -93,7 +120,7 @@ class NewUser extends Component {
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Email address</label>
-                                    <input type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <input required="" type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Firt Name</label>
@@ -105,16 +132,16 @@ class NewUser extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label >Personal Phone</label>
-                                    <input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="personaphone" aria-describedby="phoneHelp" placeholder="Enter email" />
+                                    <input type="text" data-mask="(00) 00000-0000" data-mask-selectonfocus="true" onChange={this.handlePersonalPhoneChange} className="form-control" id="personaphone" aria-describedby="phoneHelp" placeholder="Enter email" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input type="password" onChange={this.hanlePasswordChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
                                 </div>
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <label htmlFor="exampleInputPassword1"> Confirm Password</label>
                                     <input type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="exampleInputPassword2" placeholder="Password" />
-                                </div> */}
+                                </div>
                                 <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</button>
                                 <br />
                                 

@@ -4,7 +4,8 @@ import config from './../../config'
 import bcrypt from 'bcrypt'
 
 export default async (req, res, next) => {
-    const { email, password } = req.body.user;
+    const { email, password} = req.body.user;
+    console.log(req.body.user)
     
     try {
         //Verificar se realmente foi enviado um email e senha
@@ -24,11 +25,12 @@ export default async (req, res, next) => {
         gerar um token com o email  
         */
         if (result !== null && bcrypt.compareSync(password, result.password)){
-            
+            const id = result._id
             const tokenData = {                    
                     email,
+                    id,
                 }        
-            const generatedToken = jwt.sign(tokenData, config.JWT_KEY, {  expiresIn: '10m'});
+            const generatedToken = jwt.sign(tokenData, config.JWT_KEY, {  expiresIn: '60m'});
             res.json({
                 success: true,
                 token: generatedToken

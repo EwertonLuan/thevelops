@@ -17,6 +17,7 @@ export default async (req, res) => {
                     message: 'Token is valid.'
                 });
             } else {
+            console.log('so nos erros')
                 res.status(401).json({
                     success: false,
                     error: err
@@ -25,6 +26,7 @@ export default async (req, res) => {
         })
 
     } catch (error) {
+        console.log('Ta feio a coisa na autenticação')
         return res.status(500).json({ error });
     }
 }
