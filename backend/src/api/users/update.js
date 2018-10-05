@@ -14,7 +14,7 @@ export default async (req, res) => {
         //     }
         console.log(req.body.email)
         const new_datas = req.body
-        result = await User.findByIdAndUpdate(id, {
+        result = await User.findOneAndUpdate(id, {
             email: new_datas.email,
             first_name: new_datas.first_name,
             last_name: new_datas.last_name,

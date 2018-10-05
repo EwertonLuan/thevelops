@@ -17,11 +17,8 @@ class GetUser extends Component {
             
         }
     }
-    
     async componentDidMount() {
         const user = await this.FindOne();
-        // console.log(user)
-        // console.log(this.state)
         this.setState({user});
         console.log(this.state)
     }
@@ -31,20 +28,13 @@ class GetUser extends Component {
         console.log("aqui é o objeto "+payloadId)
         try {
             const { data } = await findByid(payloadId);
-            // console.log(data.users)
             return data.users;
         } catch (error) {
             console.log('Error', error);
         }
     }
-    Logout = ()=>{
-        clearAuthToken()
-    }
-
-
     render() {
-        
-         const shouwDate = this.state.user
+        const shouwDate = this.state.user
         return (
                 <div className="row" style={{ paddingTop: '50px' }}>
                 <div className="col">
@@ -69,27 +59,17 @@ class GetUser extends Component {
                                     <label >Personal Phone</label>
                                     <h1 type="email" className="form-control" id="" aria-describedby="" >{shouwDate.personal_phone}</h1>
                                 </div>
-                                
-                                {/* <div className="form-group">
-                                    <label htmlFor="exampletdPassword1"> Confirm Password</label>
-                                    <td type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="exampletdPassword2" placeholder="Password" />
-                                </div> */}
                                 <Link to="/user/edit" className="btn btn-primary btn-block">Edit User</Link>
                                 <Link to="/user/edit_password" className="btn btn-primary btn-block">Edit Password</Link>
-                                <Link to="/" onClick={this.Logout()} className="btn btn-primary btn-block">Logout</Link>
+                                <button to="/" onClick={clearAuthToken} className="btn btn-primary btn-block">Logout</button>
                                 <br />
-                                
                             </form>
-
-
                         </div>
                     </div>
-
                 </div>
                 <div className="col">
                 </div>
             </div>
-
     )}
 }
 
