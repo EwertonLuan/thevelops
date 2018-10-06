@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import {login} from './../User/API'
-import { withRouter,Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import {Link, withRouter } from 'react-router-dom'
+import config from './../../config'
 
 class LoginForm extends Component {
 
 constructor() {
-    super();
+    super()
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
     
     this.state = {
         
@@ -26,109 +26,37 @@ constructor() {
             
     }}
 }
-
+    //For can find In the React google app
     static displayName = 'ui-LoginForm'
-
-    componentDidMount() {
-        this.verifytoken();
+    
+    //Route to page /user after login
+    reloadPage() {
+        window.location.href= config.URL_LOCAL + "/user"
     }
-
-    verifytoken() {
-        let url = 'http://localhost:4000/api/users/verify';
-        let token = localStorage.getItem('DD101_TOKEN');
-
-        if (!token) {
-            this.setState({
-                error: 'No token defined. Please Login.'
-            })
-            return
-        }
-
-        fetch(url, {
-            method: "GET",
-            body: undefined,
-            headers: {
-                "Content-Type": "application/json",
-                "authorization": `Bearer ${token}`
-            }
-        }).then(response => response.json())
-            .then(responseJson => {
-                if (responseJson.success) {
-                    this.setState({
-                        logged: responseJson.success,
-                        error: undefined
-                    })
-                    // this.loadUsers()
-                } else {
-                    this.setState({
-                        error: responseJson.error.message
-                    })
-                }
-            }).catch(err => this.setState({ error: err }));
-    }
-
-    // loadUsers() {
-    //     let url = 'http://localhost:4000/';
-    //     let token = localStorage.getItem('DD101_TOKEN');
-    //     if (!token) {
-    //         this.setState({
-    //             error: 'No token defined. Please Login.'
-    //         })
-    //         return
-    //     }
-
-    //     fetch(url, {
-    //         method: "POST",
-    //         body: undefined,
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "authorization": `Bearer ${token}`
-    //         }
-    //     }).then(response => response.json())
-    //         .then(responseJson => {
-    //             this.setState({
-    //                 users: responseJson.data,
-    //                 error: undefined
-    //             })
-    //         }).catch(err => this.setState({ error: err }));
-    // }
-
-
-    showAuthorizedArea() {
-        if (this.state.logged) {
-            return (
-                <div>
-                    <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#authenticatedModal" data-whatever="@mdo" >Call Authenticated only API</button>
-                    <small id="emailHelp" className="form-text text-muted">Only registered and logged users can call and see the list. Plese click the button above to call the API.</small>
-                </div>
-            );
-        }
-    }
-
     /*
     Register Form area
     */
 
-    //Subimite do formulario
+    //Formulario submit
     handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
+        //Dates to Login
         let dataToSend = {
             user: {
                 email: this.state.email,
                 password: this.state.password
             }
-            
-        };
+        }
 
         if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
             return alert("Campos obrigatorios Email/Senha")
         }else{ 
         console.log(JSON.stringify(dataToSend))
-        //url da api para realizar post
-        let url = 'http://localhost:4000/api/users/auth';
+        //URL for authentication
+        let url = 'http://localhost:4000/api/users/auth'
 
 
-        //encaminha o post para o backend
+        //Route from the Login to the Backend
         fetch(url, {
             method: "POST",
             body: JSON.stringify(dataToSend),
@@ -137,88 +65,66 @@ constructor() {
             }
         }).then(response => response.json())
             .then(responseJson => {
-                console.log(responseJson)
+                //Change the Success Ssate for true and set a Token in Local Storage
                 if (responseJson.success) {
-                    localStorage.setItem('DD101_TOKEN', responseJson.token);
-                    // this.setState({
-                    //     logged: true,
-                    //     error: undefined
-                    // })
-                    // this.loadUsers()
+                    localStorage.setItem('DD101_TOKEN', responseJson.token)
+                    this.setState({
+                        logged: true,
+                        error: undefined
+                    })
+                    //Page Reload
+                    this.reloadPage()
+                    // window.location.reload()
+                }else{
+                    if(this.state.error === undefined) alert("Email or Password invalid")
                 }
-            }).catch(err => this.setState({ error: err }));
+            }).catch(err => this.setState({ error: err }))
         }
-
-            
     }
-
+    //Make the change in the Email State
     handleEmailChange(e) {
         this.setState({
             email: e.target.value
-        });
+        })
     }
-
+    //Make the change in the Password state
     handlePasswordChange(e) {
         this.setState({
             password: e.target.value
-        });
+        })
     }
     
-
     render() {
         return (
-            <div className="container">
-                {/* Begin Modal Register Form */}
-                {/* Begin Modal Register Form */}
 
-                {/* Begin Modal List Authenticad List  */}
-                
-
-                {/* Begin Login Form */}
-                <div className="row" style={{ paddingTop: '50px' }}>
-                    <div className="col">
-                    </div>
-                    <div className="col">
-                        <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-                            {/* <img className="card-img-top" src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAV3AAAAJDEwODQxZWI3LTYyMmUtNDEzZS04YjNlLTNmNzA0YjY0OTMwMg.jpg" alt="Card image cap" /> */}
-                            <div className="card-body">
+            <div className="row" style={{ paddingTop: '50px' }}>
+            <div className="col">
+            </div>
+            <div className="col">
+                <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                    <div className="card-body">
                                 <form>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Email address</label>
-                                        <input type="email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onChange={this.handleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-                                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    <div className="page-header">
+                                        <h1>Login</h1>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputPassword1">Password</label>
-                                        <input type="password" required="required" onChange={this.handlePasswordChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                        <label >Email address</label>
+                                        <input type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onChange={this.handleEmailChange} className="form-control" id="email-login" placeholder="Enter email" />
                                     </div>
-                                    <div className="form-check">
-                                        <label className="form-check-label">
-                                            <input type="checkbox" className="form-check-input" />
-                                            
-                                        </label>
+                                    <div className="form-group">
+                                        <label >Password</label>
+                                        <input type="password" required onChange={this.handlePasswordChange} className="form-control" id="password-login" placeholder="Password" />
                                     </div>
-                                    <Link type="submit" to="/" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</Link>
-                                    <small id="emailHelp" className="form-text text-muted">If you are not registered. Plese <a href="/signup" data-toggle="modal" data-target="#signupModel" data-whatever="@mdo" >Signup</a></small>
-                                    <br />
-                                    {
-                                        this.showAuthorizedArea()
-                                    }
-                                    
+                                    <button  className="btn btn-secondary btn-block" type="submit" onClick={this.handleSubmit}>Login</button>
+                                    <Link to="/signup" className="btn btn-secondary btn-block" href="/signup" id="signup">Signup</Link>
                                 </form>
-
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="col">
-                        
+                                </div>
                     </div>
                 </div>
-                {/* End Login Form */}
+                <div className="col">
+                </div>
             </div>
-        );
-    }
+        
+        )}
 }
-export default LoginForm;
+export default withRouter(LoginForm)

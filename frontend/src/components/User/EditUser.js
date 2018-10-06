@@ -4,7 +4,8 @@ import { findByIdAndUpdate } from './API';
 import { withRouter, Link } from 'react-router-dom';
 import {returnPayloadId} from './../Login/AuthStorage'
 import {remove} from './API'
-
+import {clearAuthToken} from './../Login/AuthStorage'
+import config from "./../../config"
 
 
 
@@ -49,30 +50,33 @@ class EditUser extends Component {
             
         })
     }
-     
-    DeleteUser = () => {
-        remove(returnPayloadId)
+    //Redirect the user for GET user page
+    redirectPage() {
+        window.location.href = config.URL_LOCAL+'/user'
     }
 
-    FindOne = async () => {
-        try {
-            const { data } = await findByIdAndUpdate();
-            // console.log(data.users)
-            return data.users;
-        } catch (error) {
-            console.log('Error', error);
-        }
+    DeleteUser = () => {
+        const id = returnPayloadId()
+        clearAuthToken()
+        remove(id)
     }
+
+    
     handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone} = this.state.user;
         console.log(this.state.user)
-                
+        
         try {
             console.log("entrou no creat do ID")
-            const { data } = await findByIdAndUpdate("5bb39d31c4c5ab1d0b019f30",email, first_name, last_name, personal_phone);            
-            console(data)
+            const id = returnPayloadId()
+            const { data } = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);            
+            
+            //Redirect to /user
+            this.redirectPage()
+            
             return data;
+            
         } catch (error) {            
              return error
         }
@@ -83,45 +87,47 @@ class EditUser extends Component {
         
         
         return (
-                <div className="row" style={{ paddingTop: '50px' }}>
+            <div className="row" style={{ paddingTop: '50px' }}>
                 <div className="col">
                 </div>
                 <div className="col">
                     <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                         <div className="card-body">
                             <form>
+                                <div className="page-header">
+                                    <h1>Edit User</h1>
+                                </div>
                                 <div className="form-group">
                                     <label>Email address </label>
-                                    <input required="" type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <input required="" type="email" onChange={this.hanleEmailChange} className="form-control" id="email-formulario" aria-describedby="emailHelp" placeholder="Enter email" />
                                 </div>
                                 <div className="form-group">
                                     <label>First Name</label>
-                                    <input type="text" onChange={this.hanleFirstChange} className="form-control" id="Firs-name" placeholder="First Name"  />
+                                    <input type="text" onChange={this.hanleFirstChange} className="form-control" id="first-name" placeholder="First Name"  />
                                 </div>
                                 <div className="form-group">
                                     <label >Last Name</label>
-                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="Last-name" placeholder="Last name"  />
+                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="last-name" placeholder="Last name"  />
                                 </div>
                                 <div className="form-group">
                                     <label >Personal Phone</label>
-                                    <input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="PersonhalPhone" placeholder="Personal Phone" />
+                                    <input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="personhal-phone" placeholder="Personal Phone" />
                                 </div>
-                                <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Submite</button>
-                                <Link type="submit" to="/" onClick={this.DeleteUser} className="btn btn-primary btn-block">Submite</Link>
+                                <button type="submit" onClick={this.handleSubmit} className="btn btn-secondary btn-block">Submite</button>
+                                <button type="submit" onClick={this.DeleteUser} className="btn btn-secondary btn-block">Delete User</button>
                                 <br />
-                                
                             </form>
-
-
                         </div>
                     </div>
-
                 </div>
-                <div className="col">
-                </div>
-            </div>
+                    <div className="col">
+                    </div>
+            </div>                     
+                                
 
-    )}
+         
+
+    )} 
 }
 
 export default withRouter(EditUser)

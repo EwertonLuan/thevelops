@@ -6,13 +6,16 @@ import config from '../../config'
 
 export default async (req, res) => {
     const { id } = req.params;
-    const salt = bcrypt.genSaltSync(config.JWT_SALT)
-    console.log(`aqui o puto$`)
-    console.log(req.body)
-    const password_chan = bcrypt.hashSync(req.body.password, salt)
-    console.log(password_chan)
+    const {password} = req.body
+
+    //Cria o salt para passa depois poder criar a senha
+    const salt = await bcrypt.genSaltSync(config.JWT_SALT)
+    
+    //cria a senha cripitografada 
+    const password_chan = await bcrypt.hashSync(password, salt)
+    
     try {
-        //Finds a user by id and update
+        //Finds a user by id and update the password
         
         result = await User.findByIdAndUpdate(id, { password: password_chan
      }, { new: true }, function (err, tank) {

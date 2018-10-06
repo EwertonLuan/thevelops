@@ -17,7 +17,46 @@ export const findByIdAndUpdate = async (
 export const remove = async (id) => await axios.delete(`${url}/api/users/${id}`);//REMOVE A USER BY ID
 
 //REQUESTS WITH POST
-export const login = async () => await axios.post(`${url}/api/users/auth/`) //LOGIN 
+  export const login = async (email,password) => await axios.post(`${url}/api/users/auth/`,{email, password})
+  .then(response =>  {
+  console.log(response.data.success)
+  
+  if (response.data.success) {
+      
+      return response.data.success
+      // this.loadUsers()
+  }
+}).catch(err => console.log(err ))
+ //LOGIN 
+
+// let url = 'http://localhost:4000/api/users/auth';
+
+
+//encaminha o post para o backend
+// fetch(url, {
+//     method: "POST",
+//     body: JSON.stringify(dataToSend),
+//     headers: {
+//         "Content-Type": "application/json"
+//     }
+// }).then(response => response.json())
+//     .then(response => {
+//         console.log(response)
+//         if (response.success) {
+//             localStorage.setItem('DD101_TOKEN', response.token);
+            // this.setState({
+            //     logged: true,
+            //     error: undefined
+            // })
+            // this.loadUsers()
+//         }
+//     }).catch(err => this.setState({ error: err }));
+// }
+
+    
+// }
+
+
 export const create = async (
   email,
   first_name, 
@@ -25,6 +64,8 @@ export const create = async (
   personal_phone, 
   password
   )  => await axios.post(`${url}/api/users/`, { email, first_name, last_name, personal_phone, password });// CREAT NEW USERS
+
+
 
 //REQUESTS WITH GET
 export const findAll = async () => await axios.get(`${url}/api/users/`); //GET ALL USERS

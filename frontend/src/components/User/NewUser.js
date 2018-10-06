@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import { create } from './API';
 import { withRouter } from 'react-router-dom';
+import {login} from './API'
+import config from '../../config';
+import {Input} from 'reactstrap'
 
 
 class NewUser extends Component {
@@ -14,6 +17,7 @@ class NewUser extends Component {
             password:'',
             
         },
+        success:false,
         password_confirm:'',
         validate_pass:undefined,
         error: undefined
@@ -89,6 +93,13 @@ class NewUser extends Component {
         }
     }
 
+    reloadPage() {
+        config.URL_LOCAL
+        if(this.state.success)
+            window.location.href="http://localhost:3000/user"
+        }
+    
+
     handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone, password } = this.state.user;
@@ -100,7 +111,11 @@ class NewUser extends Component {
         
         try {
             console.log("entrou no creat")
-            const { data } = await create(email, first_name, last_name, personal_phone, password );            
+            const { data } = await create(email, first_name, last_name, personal_phone, password );
+            this.setState({success:true})
+            console.log(this.state.success)
+            if(this.state.success) login(email, password)
+            this.reloadPage()
             return data;
         } catch (error) {            
             console.log('Error', error);
@@ -110,41 +125,41 @@ class NewUser extends Component {
     render() {
         
         return (
+            <div className="container">
                 <div className="row" style={{ paddingTop: '50px' }}>
                 <div className="col">
-                </div>
-                <div className="col">
                     <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-                        
                         <div className="card-body">
                             <form>
+                                <div className="page-header">
+                                    <h1>Login</h1>
+                                </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Email address</label>
-                                    <input required="" type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <label >Email address</label>
+                                    <input required type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Firt Name</label>
-                                    <input type="text" onChange={this.hanleFirstChange} className="form-control" id="firstname" aria-describedby="firshelp" placeholder="Enter email" />
+                                    <input required type="text" onChange={this.hanleFirstChange} className="form-control" id="firstname" aria-describedby="firshelp" placeholder="First namee" />
                                 </div>
                                 <div className="form-group">
                                     <label >Last Name</label>
-                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="lastname" aria-describedby="lasthelp" placeholder="Enter email" />
+                                    <input required type="text" onChange={this.hanleLastChange} className="form-control" id="lastname" aria-describedby="lasthelp" placeholder=" Last name" />
                                 </div>
                                 <div className="form-group">
                                     <label >Personal Phone</label>
-                                    <input type="text" data-mask="(00) 00000-0000" data-mask-selectonfocus="true" onChange={this.handlePersonalPhoneChange} className="form-control" id="personaphone" aria-describedby="phoneHelp" placeholder="Enter email" />
+                                    <input required type="phone" data-mask="(00) 00000-0000" data-mask-selectonfocus="true" onChange={this.handlePersonalPhoneChange} className="form-control" id="personaphone" aria-describedby="phoneHelp" placeholder="Personal Phome" />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1">Password</label>
-                                    <input type="password" onChange={this.hanlePasswordChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                    <label>Password</label>
+                                    <input required type="password" onChange={this.hanlePasswordChange} className="form-control" id="password-form" placeholder="Password" />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1"> Confirm Password</label>
-                                    <input type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="exampleInputPassword2" placeholder="Password" />
+                                    <label> Confirm Password</label>
+                                    <input required type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="Password-confirm" placeholder="Confirm password" />
                                 </div>
                                 <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</button>
                                 <br />
-                                
                             </form>
 
 
@@ -152,9 +167,10 @@ class NewUser extends Component {
                     </div>
 
                 </div>
-                <div className="col">
-                </div>
+
             </div>
+       </div>
+           
 
     )}
 }

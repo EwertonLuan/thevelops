@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { withRouter,Link } from 'react-router-dom';
 import {returnPayloadId} from './../Login/AuthStorage'
 import {updatePassword} from './API'
-
+import {returnPayloadEmail} from './../Login/AuthStorage'
+import config from './../../config'
 
 
 
@@ -16,8 +17,11 @@ class EditUser extends Component {
         password_old:'',
         password_confirm:''
 
-        }
+        },
+        logged: false,
+        error:''
     }
+
 
     hanlePasswordChange = ({ target }) => {
         const { password_old, value } = target;
@@ -48,23 +52,72 @@ class EditUser extends Component {
         });
     }
 
+    //Redirect the user for GET user page
+    redirectPage() {
+        window.location.href = config.URL_LOCAL+'/user'
+        
+    }
 
 
     
     handleSubmit = async (e) => {
         e.preventDefault();
+        const email_send = returnPayloadEmail()
         const { password } = this.state.user;
-        
+         //Dates to Login
+         let dataToSend = {
+            user: {
+                email: email_send,
+                password: this.state.user.password_old
+            }
+        }
+        // console.log(dataToSend)
+        if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
+            return alert("Campos obrigatorios de Senha")
+        }else{ 
+        console.log(JSON.stringify(dataToSend))
+        //URL for authentication
+        let url = 'http://localhost:4000/api/users/auth'
+
+
+        //Route from the Login to the Backend
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(dataToSend),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => response.json())
+            .then(responseJson => {
+                //Change the Success State for true and set a Token in Local Storage
+                if (responseJson.success) {
+                    
+                    this.setState({
+                        logged: true,
+                        error: undefined
+                    })
+                    //Page Reload
+                    // this.reloadPage()
+                    // window.location.reload()
+                }else{
+                   alert("Password invalid")
+                }
+            }).catch(err => this.setState({ error: err }))
+        }
         
                 
         try {
+            if(this.state.logged){
             const payloadId = returnPayloadId()
             console.log("entrou no creat do ID")
+            console.log("essa é a senha "+ password)
             const { data } = await updatePassword(payloadId,password);
-            console.log("foi oque ele mandou"+data)            
-            console(data)
-            return data;
-        } catch (error) {            
+            
+            
+            window.location.href = "http://localhost:3000/user"
+            return data;}
+        } catch (error) {
+            
              return error
         }
     
