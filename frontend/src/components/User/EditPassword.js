@@ -13,7 +13,7 @@ class EditUser extends Component {
     
     state = {
         user:{
-        password:'',
+        password_new:'',
         password_old:'',
         password_confirm:''
 
@@ -22,6 +22,7 @@ class EditUser extends Component {
         error:''
     }
 
+    static displayName = 'ui-LoginForm'
 
     hanlePasswordChange = ({ target }) => {
         const { password_old, value } = target;
@@ -34,11 +35,11 @@ class EditUser extends Component {
     }
 
     hanlePasswordChangeNew = ({ target }) => {
-        const { password, value } = target;
+        const { password_new, value } = target;
         const { user } =   this.state;
         
-        this.setState(password, () => {
-            user.password = value;
+        this.setState(password_new, () => {
+            user.password_new = value;
         });
         
     }
@@ -62,8 +63,11 @@ class EditUser extends Component {
     
     handleSubmit = async (e) => {
         e.preventDefault();
+       
+        try {
+
         const email_send = returnPayloadEmail()
-        const { password } = this.state.user;
+        
          //Dates to Login
          let dataToSend = {
             user: {
@@ -75,7 +79,7 @@ class EditUser extends Component {
         if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
             return alert("Campos obrigatorios de Senha")
         }else{ 
-        console.log(JSON.stringify(dataToSend))
+        // console.log(JSON.stringify(dataToSend))
         //URL for authentication
         let url = 'http://localhost:4000/api/users/auth'
 
@@ -96,9 +100,16 @@ class EditUser extends Component {
                         logged: true,
                         error: undefined
                     })
-                    //Page Reload
-                    // this.reloadPage()
-                    // window.location.reload()
+                    if(this.state.logged){
+                        const payloadId = returnPayloadId()
+                        console.log("entrou no creat do ID")
+                        console.log("essa é a senha "+ this.state.user.password_new)
+                        const { data } =  updatePassword(payloadId,this.state.user.password_new);
+                        
+                        console.log(data)
+                        
+                        return data;}
+                    
                 }else{
                    alert("Password invalid")
                 }
@@ -106,16 +117,8 @@ class EditUser extends Component {
         }
         
                 
-        try {
-            if(this.state.logged){
-            const payloadId = returnPayloadId()
-            console.log("entrou no creat do ID")
-            console.log("essa é a senha "+ password)
-            const { data } = await updatePassword(payloadId,password);
-            
-            
-            window.location.href = "http://localhost:3000/user"
-            return data;}
+        
+
         } catch (error) {
             
              return error

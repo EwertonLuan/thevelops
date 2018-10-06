@@ -93,10 +93,10 @@ class NewUser extends Component {
         }
     }
 
-    reloadPage() {
-        config.URL_LOCAL
-        if(this.state.success)
-            window.location.href="http://localhost:3000/user"
+    rediRedct() {
+        
+        
+            window.location.href=config.URL_LOCAL+"/user"
         }
     
 
@@ -115,7 +115,7 @@ class NewUser extends Component {
             this.setState({success:true})
             console.log(this.state.success)
             if(this.state.success) login(email, password)
-            this.reloadPage()
+            this.rediRedct()
             return data;
         } catch (error) {            
             console.log('Error', error);

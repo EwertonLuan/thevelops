@@ -20,7 +20,7 @@ export default async (req, res) => {
             first_name: new_datas.first_name,
             last_name: new_datas.last_name,
             personal_phone: new_datas.personal_phone
-         }, { new: true }, function (err, tank) {
+         }, { new: false }, function (err, tank) {
            if (err) return console.log(err);
            console.log("dentro do if"+id)
            console.log(tank.id)

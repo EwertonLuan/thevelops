@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000'
 
 //REQUESTS WITH PUT
-export const updatePassword = async (id, password) => await axios.put(`${url}/api/users/${id}/change`,{password});//UPDATE PASSWORD
+export const updatePassword = async (id, password_new) => await axios.put(`${url}/api/users/${id}/change`,{password_new});//UPDATE PASSWORD
 export const findByIdAndUpdate = async (
   id,
   email,
