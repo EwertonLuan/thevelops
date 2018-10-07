@@ -47,7 +47,9 @@ For testes API you can use [Postman](https://www.getpostman.com/), just put the 
 
 This is the route that verifies  the token validate.  
 
-```sh router.get('/verify', verifyToken)```
+```sh
+router.get('/verify', verifyToken)
+```
 - requested: header 
 ```sh
 Authorization
@@ -59,21 +61,27 @@ Bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV3ZXJ0b24yQGhvdC5jb20iLC
 
 This is the route that show all uses.
 
-```sh router.get('/', findAll)```
+```
+sh router.get('/', findAll)
+```
 - requested: don't have
 
 `GET /users/5bac1f4980701043b4bb0b80 `
 
 This is the route that find one by id.  
 
-```sh router.get('/:id', :findOne)```
+```
+sh router.get('/:id', :findOne)
+```
 - requested: id:(req.params)
 
 `POST /users`
 
 This is the route that create a new user.
 
-```sh router.post('/', create)```
+```sh
+router.post('/', create)
+```
 - requested: 
 ```sh
 email:
@@ -87,14 +95,18 @@ password:
 
 This is the route that delete a user by id. 
 
-```sh router.delete('/:id', remove)```
+```
+sh router.delete('/:id', remove)
+```
 - requested: id(req.params)
 
 `PUT /users/5bac1f4980701043b4bb0b80`
 
 This is the route that Update a user by id.
 
-```sh router.put('/:id', update)```
+```sh
+router.put('/:id', update)
+```
 - requested:
 ```sh
 id:(req.params)
@@ -107,7 +119,9 @@ personal_phone:
 
 This is the route that change  the password after confirm current password.
 
-```sh router.put('/:id/change', updatePassword)```
+```sh
+router.put('/:id/change', updatePassword)
+```
 - requested:
 ```sh
 id:(req.params)
@@ -117,7 +131,9 @@ password:
 
 This is the route that Autentication.
 
-```sh router.post('/auth', auth) ```
+```sh
+router.post('/auth', auth)
+```
 - requested: 
 ```sh
 email:
@@ -127,7 +143,9 @@ password:
 
 This is the route that Login 
 
-```sh router.post('/login', findUser)```
+```sh
+router.post('/login', findUser)
+```
 - requested: 
 ```sh
 email:
