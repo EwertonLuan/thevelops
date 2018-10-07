@@ -12,11 +12,12 @@ class EditUser extends Component {
     
     state = {
         user:{
-        password_new:'',
-        password_old:'',
-        password_confirm:''
+        password_new: undefined,
+        password_old: undefined,
+        password_confirm: undefined
 
         },
+        validate_pass: false,
         logged: false,
         error:''
     }
@@ -58,15 +59,31 @@ class EditUser extends Component {
         
     }
 
+    validarSenha = () => {
+        const change = this.state.user
+        if(change.password_new === change.password_confirm){
+            this.setState({
+                validate_pass: true
+            })
+        }else{
+            this.setState({
+                validate_pass: false
+            })
+            alert("The password are not the same")
+            return 
+        }
+    }
 
     
     handleSubmit = async (e) => {
         e.preventDefault();
-       
+        this.validarSenha()
         try {
+        
+        
 
         const email_send = returnPayloadEmail()
-        
+        const password_toSend = this.state.user
          //Dates to Login
          let dataToSend = {
             user: {
@@ -75,9 +92,14 @@ class EditUser extends Component {
             }
         }
         // console.log(dataToSend)
-        if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
+        if(dataToSend.user.email === null || dataToSend.user.password === null ||
+            password_toSend.password_confirm === null || password_toSend.password_new === null){
+
             return alert("Campos obrigatorios de Senha")
-        }else{ 
+
+        }else if(this.state.validate_pass === false){
+            return
+         }else{
         // console.log(JSON.stringify(dataToSend))
         //URL for authentication
         let url = 'http://localhost:4000/users/auth'
@@ -102,8 +124,9 @@ class EditUser extends Component {
                     if(this.state.logged){
                         const payloadId = returnPayloadId()
                         console.log("entrou no creat do ID")
+                        const password = this.state.user.password_new
                         console.log("essa é a senha "+ this.state.user.password_new)
-                        const { data } =  updatePassword(payloadId,this.state.user.password_new);
+                        const { data } =  updatePassword(payloadId, password);
                         this.redirectPage()
                         console.log(data)
                         
@@ -161,8 +184,7 @@ class EditUser extends Component {
                     </div>
 
                 </div>
-                <div className="col">
-                </div>
+                <div className="col"/>
             </div>
 
     )}

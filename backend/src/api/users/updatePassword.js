@@ -4,16 +4,16 @@ import config from '../../config'
 
 
 
+
 export default async (req, res) => {
     /**Reiceve a ID and a new password after do it login */
     const { id } = req.params;
     const password_new = req.body
     
-    
     const salt = await bcrypt.genSaltSync(config.JWT_SALT)
     
     /**Password with Hash */
-    const password_chan = await bcrypt.hashSync(password_new.password_new, salt)
+    const password_chan = await bcrypt.hashSync(password_new.password, salt)
     
     try {
         //Finds a user by id and update the password

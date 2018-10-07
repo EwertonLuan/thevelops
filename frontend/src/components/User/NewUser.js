@@ -10,16 +10,16 @@ import config from '../../config';
 class NewUser extends Component {
     state = {
         user: {
-            email: '',
-            first_name: '',
-            last_name: '',
-            personal_phone: '',
-            password:'',
+            email: null,
+            first_name: null,
+            last_name: null,
+            personal_phone: null,
+            password:null,
             
         },
         success:false,
-        password_confirm:'',
-        validate_pass:undefined,
+        password_confirm:null,
+        validate_pass: null,
         error: undefined
         
         
@@ -103,48 +103,58 @@ class NewUser extends Component {
             window.location.href=config.URL_LOCAL+"/user"
         }
     
-
+    /** Submit form */    
     handleSubmit = async (e) => {
         e.preventDefault();
+
         const { email, first_name, last_name, personal_phone, password } = this.state.user;
         
         this.validarSenha()
-        if(this.state.validate_pass === false){
-            return 
-        }else{ 
-        
-        try {
+        try{
+            if(email === null ||
+                first_name === null ||
+                last_name, personal_phone === null ||
+                password === null ){
+                    alert("You must fill in all fields")
+                    return
+            } else if(this.state.validate_pass === false){
+                return 
+            }else{ 
             
-            const { data } = await create(email, first_name, last_name, personal_phone, password );
-            this.setState({success:true})
-            
-            if(this.state.success) login(email, password)
-            this.rediRedct()
-            return data;
+                const { data } = await create(email, first_name, last_name, personal_phone, password );
+                this.setState({success:true})
+                
+                if(this.state.success) login(email, password)
+                
+                this.rediRedct()
+
+                return data;
+            }
         } catch (error) {            
             console.log('Error', error);
         }
-    }
+    
     }
     render() {
         
         return (
-            <div className="container">
-                <div className="row" style={{ paddingTop: '50px' }}>
-                <div className="col">
-                    <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-                        <div className="card-body">
+            <div className="row" style={{ paddingTop: '50px' }}>
+            <div className="col">
+            </div>
+            <div className="col">
+                <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                    <div className="card-body">
                             <form>
                                 <div className="page-header">
                                     <h1>Login</h1>
                                 </div>
                                 <div className="form-group">
-                                    <label >Email address</label>
-                                    <input required type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                    <label >Email </label>
+                                    <input required type="email" onChange={this.hanleEmailChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Firt Name</label>
-                                    <input required type="text" onChange={this.hanleFirstChange} className="form-control" id="firstname" aria-describedby="firshelp" placeholder="First namee" />
+                                    <label htmlFor="exampleInputEmail1">First Name</label>
+                                    <input required type="text" onChange={this.hanleFirstChange} className="form-control" id="firstname" aria-describedby="firshelp" placeholder="First name" />
                                 </div>
                                 <div className="form-group">
                                     <label >Last Name</label>
@@ -162,18 +172,15 @@ class NewUser extends Component {
                                     <label> Confirm Password</label>
                                     <input required type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="Password-confirm" placeholder="Confirm password" />
                                 </div>
-                                <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Login</button>
+                                <button type="submit" onClick={this.handleSubmit} className="btn btn-secondary btn-block">Login</button>
                                 <br />
                             </form>
-
-
                         </div>
                     </div>
-
                 </div>
-
+                <div className="col"/>
+                 
             </div>
-       </div>
            
 
     )}

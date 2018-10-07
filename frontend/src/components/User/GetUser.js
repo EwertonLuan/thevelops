@@ -73,8 +73,7 @@ class GetUser extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col">
-                </div>
+                <div className="col"/>
             </div>
     )}
 }

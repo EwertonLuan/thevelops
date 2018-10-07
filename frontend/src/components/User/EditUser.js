@@ -14,11 +14,13 @@ class EditUser extends Component {
     
     state = {
         user:{
-        email: '',
-        first_name: '',
-        last_name: '',
-        personal_phone: '',
-        }
+        password_new:undefined,
+        password_old:undefined,
+        password_confirm:undefined
+
+        },
+        logged: false,
+        error:null
     }
 
     /** Watch the changes in the field input Email*/
@@ -124,8 +126,7 @@ class EditUser extends Component {
                         </div>
                     </div>
                 </div>
-                    <div className="col">
-                    </div>
+                <div className="col"/>
             </div>                     
               
     )} 

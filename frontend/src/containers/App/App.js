@@ -6,6 +6,8 @@ import Login from './../../components/Login/Login'
 import GetUSer from './../../components/User/GetUser'
 import EditUser from './../../components/User/EditUser'
 import EditPassword from './../../components/User/EditPassword'
+
+
 // import 'bootstrap/dist/css/bootstrap.css';
 /** If the user don't have token for access he'll go redirect for  login page 
  *  If the user have token for access he 'll go redirect for get user page 
