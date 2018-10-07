@@ -26,7 +26,7 @@ This comando will runing the projetc with the babel and nodemon
 
 These are the Routes API 
 
-This is the route that verifies  the token validate  GET /users/verify
+This is the route that verifies  the token validate  GET /users/verify 
 router.get('/verify', verifyToken)
 requested: req.header
 
@@ -34,18 +34,20 @@ This is the route that show all uses in the   GET /users
 router.get('/', findAll);
 requested: don't have
 
-This is the route that find one by ID  GET /users/5bac1f4980701043b4bb0b80
+This is the route that find one by ID  GET /users/5bac1f4980701043b4bb0b80 
 router.get('/:id', findOne);
 requested:id:(req.params)
 
 This is the route that create a new user POST /users
 router.post('/', create);
-requested:  email:
-            first_name:
-            last_name:
-            personal_phone:
-            password: 
-
+requested: 
+```sh
+email:
+first_name:
+last_name:
+personal_phone:
+password: 
+```
 
 This is the route that delete a user by ID DELETE /users/5bac1f4980701043b4bb0b80
 router.delete('/:id', remove);
@@ -53,22 +55,33 @@ requested:id(req.params)
 
 This is the route that Update a user by ID  PUT /users/5bac1f4980701043b4bb0b80
 router.put('/:id', update);
-requested:  id:(req.params)
-            email:
-            first_name:
-            last_name:
-            personal_phone:
+requested:
+```sh
+id:(req.params)
+email:
+first_name:
+last_name:
+personal_phone:
+```
 
 
 This is the route that change  the password after confirm current password PUT /users/5bac1f4980701043b4bb0b80/change
 router.put('/:id/change', updatePassword);
-requested:id:(req.params)
-          password:
+requested:
+```sh
+id:(req.params)
+password:
+```
+```
 
 This is the route that Autentication route POST /users/auth
 router.post('/auth', auth) 
-requested: email:
-           password:
+requested: 
+
+```sh
+email:
+password:
+```
 
 This is the route that Login route POST /users/login
 router.post('/login', findUser)
@@ -87,6 +100,7 @@ Route React:
 
 
 Model for input datas into the Database
+ ```sh
 UserJoi = joi.object({
     email: joi.string().email().required(),
     first_name: joi.string().required(),
@@ -94,5 +108,6 @@ UserJoi = joi.object({
     personal_phone: joi.string().regex(/\([0-9]{2}\)\s[0-9]{5}\-[0-9]{4}/).required(),
     password: joi.string().required()
 
+ ```
 
     
