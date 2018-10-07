@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { findByIdAndUpdate } from './API';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {returnPayloadId} from './../Login/AuthStorage'
 import {remove} from './API'
 import {clearAuthToken} from './../Login/AuthStorage'
@@ -20,6 +20,8 @@ class EditUser extends Component {
         personal_phone: '',
         }
     }
+
+    /** Watch the changes in the field input Email*/
     hanleEmailChange = ({ target }) => {
         const { email, value } = target;
         const { user } =  this.state;
@@ -27,6 +29,7 @@ class EditUser extends Component {
             user.email = value;
         });    
     }
+    /** Watch the changes in the field input First name*/
     hanleFirstChange = ({ target }) => {
         const { first_name, value } = target;
         const { user } = this.state;
@@ -34,7 +37,7 @@ class EditUser extends Component {
             user.first_name = value;
         });
     }
-
+    /** Watch the changes in the field input Last name*/
     hanleLastChange = ({ target }) => {
         const { last_name, value } = target;
         const { user } =   this.state;
@@ -42,6 +45,7 @@ class EditUser extends Component {
             user.last_name = value;
         });
     }
+    /** Watch the changes in the field input Personal phone*/
     handlePersonalPhoneChange = ({ target }) => {
         const { personal_phone, value } = target;
         const { user } = this.state;
@@ -55,20 +59,20 @@ class EditUser extends Component {
         window.location.href = config.URL_LOCAL+'/user'
     }
 
+    /**Delete user and token */
     DeleteUser = () => {
         const id = returnPayloadId()
         clearAuthToken()
         remove(id)
     }
 
-    
+    /** Submite the form*/
     handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone} = this.state.user;
-        console.log(this.state.user)
         
         try {
-            console.log("entrou no creat do ID")
+        
             const id = returnPayloadId()
             const { data } = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);            
             
@@ -123,10 +127,7 @@ class EditUser extends Component {
                     <div className="col">
                     </div>
             </div>                     
-                                
-
-         
-
+              
     )} 
 }
 

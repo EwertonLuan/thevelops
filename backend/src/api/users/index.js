@@ -10,26 +10,52 @@ import verifyToken from './verify-token'
 import updatePassword from './updatePassword'
 
 const router = Router();
+
+/**Route API for Verify the token validate */
+
+//GET /users/verify
 router.get('/verify', verifyToken)
-//GET http://localhost:9000/api/users/
+
+/** Route API for show all uses in the  */
+
+//GET /users/
 router.get('/', findAll);
-//GET http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
+
+/**Find one by ID */
+
+//GET /users/5bac1f4980701043b4bb0b80
 router.get('/:id', findOne);
 
-//POST http://localhost:9000/api/users/
+/**Create a new user (Signup) */
+
+//POST /users/
 router.post('/', create);
 
-//DELETE http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
+/** Delete a user by ID */
+
+//DELETE /users/5bac1f4980701043b4bb0b80
 router.delete('/:id', remove);
 
-//PUT http://localhost:9000/api/users/5bac1f4980701043b4bb0b80
+/**Update a user by ID*/
+
+//PUT /users/5bac1f4980701043b4bb0b80
 router.put('/:id', update);
+
+/**Change the password after confirm current password*/
+
+//PUT /users/5bac1f4980701043b4bb0b80/change
 router.put('/:id/change', updatePassword);
 
-//POST http://localhost:9000/api/users/auth
+/**Autentication route */
+
+//POST /users/auth
 router.post('/auth', auth) 
-//POST http://localhost:9000/api/users/login
+
+
+/**Login route */
+
+//POST /users/login
 router.post('/login', findUser)
-//POST http://localhost:9000/api/users/login
+
 
 export default router;

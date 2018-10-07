@@ -4,10 +4,11 @@ import config from './../../config'
 import bcrypt from 'bcrypt'
 
 export default async (req, res, next) => {
+    /**Receives a email and password */
     const { email, password } = req.body;
     
     try {
-        //Find a user by email
+        /**Valid the password and email*/
         if( email === undefined || password === undefined ){
             res.status(401).json({
                 success: false,
@@ -15,14 +16,15 @@ export default async (req, res, next) => {
                 message: "E-mail and/or password invalid."
             });
         }else{
-        //Encontra um usuario por email
+        /**Find a user by email*/
         const result = await User.findOne({email})
         
-        /*
-        confirma se o email foi encontrado
-        compara a senha enciada com a senha no banco
-        gerar um token com o email  
-        */
+        
+        /**Confirm if find the email,
+         * Compare the password with the password in the database,
+         * Generate a token with email
+         * */
+        
         if (result !== null && bcrypt.compareSync(password, result.password)){
             
             const tokenData = {                    
@@ -42,6 +44,6 @@ export default async (req, res, next) => {
                 }
             }
         } catch (error) {
-        return res.status(500).json({ error: 'Senha invalida' });
+        return res.status(500).json({ error: 'password invalid' });
     }
 }       

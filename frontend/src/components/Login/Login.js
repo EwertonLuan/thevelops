@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import config from './../../config'
 
 class LoginForm extends Component {
 
 constructor() {
     super()
-
+   
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
@@ -26,7 +26,7 @@ constructor() {
             
     }}
 }
-    //For can find In the React google app
+    //For can find in the React google app
     static displayName = 'ui-LoginForm'
     
     //Route to page /user after login
@@ -49,11 +49,11 @@ constructor() {
         }
 
         if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
-            return alert("Campos obrigatorios Email/Senha")
+            return alert("Required fields Email/Senha")
         }else{ 
         console.log(JSON.stringify(dataToSend))
         //URL for authentication
-        let url = 'http://localhost:4000/api/users/auth'
+        let url = 'http://localhost:4000/users/auth'
 
 
         //Route from the Login to the Backend
@@ -65,7 +65,7 @@ constructor() {
             }
         }).then(response => response.json())
             .then(responseJson => {
-                //Change the Success Ssate for true and set a Token in Local Storage
+                //Change the Success State for true and set a Token in Local Storage
                 if (responseJson.success) {
                     localStorage.setItem('DD101_TOKEN', responseJson.token)
                     this.setState({
@@ -74,20 +74,20 @@ constructor() {
                     })
                     //Page Reload
                     this.reloadPage()
-                    // window.location.reload()
+                    
                 }else{
                     if(this.state.error === undefined) alert("Email or Password invalid")
                 }
             }).catch(err => this.setState({ error: err }))
         }
     }
-    //Make the change in the Email State
+    /**Make the change in the Email State*/
     handleEmailChange(e) {
         this.setState({
             email: e.target.value
         })
     }
-    //Make the change in the Password state
+    /**Make the change in the Password state*/
     handlePasswordChange(e) {
         this.setState({
             password: e.target.value

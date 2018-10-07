@@ -3,21 +3,21 @@ import axios from 'axios';
 const url = 'http://localhost:4000'
 
 //REQUESTS WITH PUT
-export const updatePassword = async (id, password_new) => await axios.put(`${url}/api/users/${id}/change`,{password_new});//UPDATE PASSWORD
+export const updatePassword = async (id, password_new) => await axios.put(`${url}/users/${id}/change`,{password_new});//UPDATE PASSWORD
 export const findByIdAndUpdate = async (
   id,
   email,
   first_name,
   last_name,
-  personal_phone) => await axios.put(`${url}/api/users/${id}`,{ email, first_name, last_name, personal_phone}); //UPDATE A USER
+  personal_phone) => await axios.put(`${url}/users/${id}`,{ email, first_name, last_name, personal_phone}); //UPDATE A USER
 
 
 
 //REQUESTS WITH DELETE
-export const remove = async (id) => await axios.delete(`${url}/api/users/${id}`);//REMOVE A USER BY ID
+export const remove = async (id) => await axios.delete(`${url}/users/${id}`);//REMOVE A USER BY ID
 
 //REQUESTS WITH POST
-  export const login = async (email,password) => await axios.post(`${url}/api/users/auth/`,{email, password})
+  export const login = async (email,password) => await axios.post(`${url}/users/auth/`,{email, password})
   .then(response =>  {
   console.log(response.data.success)
   
@@ -29,7 +29,7 @@ export const remove = async (id) => await axios.delete(`${url}/api/users/${id}`)
 }).catch(err => console.log(err ))
  //LOGIN 
 
-// let url = 'http://localhost:4000/api/users/auth';
+// let url = 'http://localhost:4000/users/auth';
 
 
 //encaminha o post para o backend
@@ -63,24 +63,24 @@ export const create = async (
   last_name, 
   personal_phone, 
   password
-  )  => await axios.post(`${url}/api/users/`, { email, first_name, last_name, personal_phone, password });// CREAT NEW USERS
+  )  => await axios.post(`${url}/users/`, { email, first_name, last_name, personal_phone, password });// CREAT NEW USERS
 
 
 
 //REQUESTS WITH GET
-export const findAll = async () => await axios.get(`${url}/api/users/`); //GET ALL USERS
-export const findByid = async (id) => await axios.get(`${url}/api/users/${id}`); //GET USERS BY ID
+export const findAll = async () => await axios.get(`${url}/users/`); //GET ALL USERS
+export const findByid = async (id) => await axios.get(`${url}/users/${id}`); //GET USERS BY ID
 
 export const verify = async (
     token
-  ) => await axios.get(`${url}/api/users/verify`,{
+  ) => await axios.get(`${url}/users/verify`,{
     headers: {
               uthorization: `Bearer ${token}`, //the token is a variable which holds the token
               }})
               .then(response => {
                                   // If request is good...
                                   console.log(response.data)
-                                  console.log("aqui é da api")
+                                  console.log("aqui é da")
                                   return response.data.success
                                 })
                                 .catch((error) => {

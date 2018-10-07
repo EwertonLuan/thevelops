@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "API backend",
+  "description": "API Backend",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",

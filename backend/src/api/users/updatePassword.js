@@ -5,11 +5,12 @@ import config from '../../config'
 
 
 export default async (req, res) => {
+    /**Reiceve a ID and a new password after do it login */
     const { id } = req.params;
     const password_new = req.body
+    console.log(password_new)
+    console.log(id)
     
-    console.log("esssa é a senha "+password_new.password_new)
-    console.log(req.body)
     //Cria o salt para passa depois poder criar a senha
     const salt = await bcrypt.genSaltSync(config.JWT_SALT)
     

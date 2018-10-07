@@ -88,7 +88,7 @@ class NewUser extends Component {
             this.setState({
                 validate_pass: false
             })
-            alert("As senhas não são iguais")
+            alert("The password are not the same")
             return 
         }
     }

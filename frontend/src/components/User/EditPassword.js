@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { withRouter,Link } from 'react-router-dom';
 import {returnPayloadId} from './../Login/AuthStorage'
@@ -81,7 +80,7 @@ class EditUser extends Component {
         }else{ 
         // console.log(JSON.stringify(dataToSend))
         //URL for authentication
-        let url = 'http://localhost:4000/api/users/auth'
+        let url = 'http://localhost:4000/users/auth'
 
 
         //Route from the Login to the Backend
@@ -105,7 +104,7 @@ class EditUser extends Component {
                         console.log("entrou no creat do ID")
                         console.log("essa é a senha "+ this.state.user.password_new)
                         const { data } =  updatePassword(payloadId,this.state.user.password_new);
-                        
+                        this.redirectPage()
                         console.log(data)
                         
                         return data;}
@@ -137,6 +136,9 @@ class EditUser extends Component {
                     <div className="card" style={{ width: '20rem', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                         <div className="card-body">
                             <form>
+                                <div className="page-header">
+                                    <h1>Edit Password</h1>
+                                </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword1">Password</label>
                                     <input type="password" onChange={this.hanlePasswordChange} className="form-control" id="password" placeholder="Old Password" />
@@ -147,9 +149,9 @@ class EditUser extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="exampleInputPassword1"> Confirm Password</label>
-                                    <input type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="password-confirm" placeholder="Confirnm Password"/>
+                                    <input type="password" onChange={this.hanlePasswordConfirmChange} className="form-control" id="password-confirm" placeholder="Confirm Password"/>
                                 </div>
-                                <button type="submit" onClick={this.handleSubmit} className="btn btn-primary btn-block">Submite</button>
+                                <button type="submit" onClick={this.handleSubmit} className="btn btn-secondary btn-block">Submit</button>
                                 <br />
                                 
                             </form>

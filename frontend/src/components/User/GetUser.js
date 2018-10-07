@@ -17,15 +17,16 @@ class GetUser extends Component {
             
         }
     }
+    
     async componentDidMount() {
         const user = await this.FindOne();
         this.setState({user});
-        console.log(this.state)
+  
     }
 
     FindOne = async () => {
         const payloadId = returnPayloadId()
-        console.log("aqui é o objeto "+payloadId)
+  
         try {
             const { data } = await findByid(payloadId);
             return data.users;

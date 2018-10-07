@@ -7,7 +7,6 @@ import GetUSer from './../../components/User/GetUser'
 import EditUser from './../../components/User/EditUser'
 import EditPassword from './../../components/User/EditPassword'
 // import 'bootstrap/dist/css/bootstrap.css';
-import NotFound from '../../components/NotFound/NotFound'
 
 class App extends Component {
   
@@ -23,7 +22,6 @@ class App extends Component {
             <Route exact path="/user" render={ () => (!isLoggedIn() ? <Redirect to="/" /> : <GetUSer/> ) }/>
             <Route exact path="/user/edit" render={ () => ( !isLoggedIn() ? <Redirect to="/" /> : <EditUser/> ) }/>
             <Route exact path="/user/edit_password" render={ () => ( !isLoggedIn() ? <Redirect to="/" />:<EditPassword/> )}/>
-            <Route path="*" component={NotFound} />
           </div>
         </Router>
       </div>
