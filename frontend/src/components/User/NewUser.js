@@ -4,7 +4,7 @@ import { create } from './API';
 import { withRouter } from 'react-router-dom';
 import {login} from './API'
 import config from '../../config';
-import {Input} from 'reactstrap'
+
 
 
 class NewUser extends Component {
@@ -24,6 +24,7 @@ class NewUser extends Component {
         
         
     }
+    /** Watch the changes in the field input Email*/
     hanleEmailChange = ({ target }) => {
         const { email, value } = target;
         const { user } =  this.state;
@@ -32,6 +33,7 @@ class NewUser extends Component {
         });
         
     }
+    /** Watch the changes in the field First Name*/
     hanleFirstChange = ({ target }) => {
         const { first_name, value } = target;
         const { user } = this.state;
@@ -40,7 +42,8 @@ class NewUser extends Component {
         });
         
     }
-
+    
+    /** Watch the changes in the field Last name*/
     hanleLastChange = ({ target }) => {
         const { last_name, value } = target;
         const { user } =   this.state;
@@ -48,8 +51,9 @@ class NewUser extends Component {
             user.last_name = value;
         });
         
+    } 
 
-    }
+    /** Watch the changes in the field Password change*/
     hanlePasswordChange = ({ target }) => {
         const { password, value } = target;
         const { user } =   this.state;
@@ -59,6 +63,8 @@ class NewUser extends Component {
         });
         
     }
+
+    /** Watch the changes in the field Password confirm*/
     hanlePasswordConfirmChange = ({ target }) => {
         const { password_confirm, value } = target;
         const { user } =   this.state;
@@ -67,7 +73,7 @@ class NewUser extends Component {
             user.password_confirm = value;
         });
     }
-
+    /** Watch the changes in the field Personal Phone*/
     handlePersonalPhoneChange = ({ target }) => {
         const { personal_phone, value } = target;
         const { user } = this.state;
@@ -77,7 +83,7 @@ class NewUser extends Component {
         })
         
     }
-
+    /** Validation Password*/
      validarSenha = () => {
         const change = this.state.user
         if(change.password === change.password_confirm){
@@ -94,8 +100,6 @@ class NewUser extends Component {
     }
 
     rediRedct() {
-        
-        
             window.location.href=config.URL_LOCAL+"/user"
         }
     
@@ -103,17 +107,17 @@ class NewUser extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const { email, first_name, last_name, personal_phone, password } = this.state.user;
-        console.log(this.state.user)
+        
         this.validarSenha()
         if(this.state.validate_pass === false){
             return 
         }else{ 
         
         try {
-            console.log("entrou no creat")
+            
             const { data } = await create(email, first_name, last_name, personal_phone, password );
             this.setState({success:true})
-            console.log(this.state.success)
+            
             if(this.state.success) login(email, password)
             this.rediRedct()
             return data;

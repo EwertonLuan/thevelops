@@ -17,7 +17,7 @@ class GetUser extends Component {
             
         }
     }
-    
+
     async componentDidMount() {
         const user = await this.FindOne();
         this.setState({user});
@@ -34,7 +34,9 @@ class GetUser extends Component {
             console.log('Error', error);
         }
     }
+    
     render() {
+
         const shouwDate = this.state.user
         return (
                 <div className="row" style={{ paddingTop: '50px' }}>

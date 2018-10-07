@@ -24,37 +24,10 @@ export const remove = async (id) => await axios.delete(`${url}/users/${id}`);//R
   if (response.data.success) {
       
       return response.data.success
-      // this.loadUsers()
+      
   }
 }).catch(err => console.log(err ))
- //LOGIN 
-
-// let url = 'http://localhost:4000/users/auth';
-
-
-//encaminha o post para o backend
-// fetch(url, {
-//     method: "POST",
-//     body: JSON.stringify(dataToSend),
-//     headers: {
-//         "Content-Type": "application/json"
-//     }
-// }).then(response => response.json())
-//     .then(response => {
-//         console.log(response)
-//         if (response.success) {
-//             localStorage.setItem('DD101_TOKEN', response.token);
-            // this.setState({
-            //     logged: true,
-            //     error: undefined
-            // })
-            // this.loadUsers()
-//         }
-//     }).catch(err => this.setState({ error: err }));
-// }
-
-    
-// }
+ 
 
 
 export const create = async (
@@ -88,6 +61,6 @@ export const verify = async (
                                   return error.response.data.success
                                 })  //VERIFY THE PASSWORD
                                                  
-//backend
+
 
 
