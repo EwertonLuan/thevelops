@@ -38,6 +38,12 @@ This comando will runing the projetc with the babel and nodemon.
 
 ![screenshot](frontend/public/babel.png)
 
+You should configurate the variables in this file /config/index.js, inside the projects Backend and Front.
+
+![screenshot](frontend/public/back_config.png)
+
+
+![screenshot](frontend/public/front_config.png)
 
 ###These are the Routes API 
 
