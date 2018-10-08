@@ -113,7 +113,8 @@ class NewUser extends Component {
         try{
             if(email === null ||
                 first_name === null ||
-                last_name, personal_phone === null ||
+                last_name === null||
+                personal_phone === null ||
                 password === null ){
                     alert("You must fill in all fields")
                     return

@@ -113,7 +113,7 @@ class EditUser extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label >Last Name</label>
-                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="last-name" placeholder="Last name"  />
+                                    <input type="text" onChange={this.hanleLastChange} className="form-control" id="last-name" placeholder="Last name"/>
                                 </div>
                                 <div className="form-group">
                                     <label >Personal Phone</label>

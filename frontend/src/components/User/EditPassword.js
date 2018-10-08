@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter,Link } from 'react-router-dom';
-import {returnPayloadId} from './../Login/AuthStorage'
-import {updatePassword} from './API'
-import {returnPayloadEmail} from './../Login/AuthStorage'
+import { withRouter } from 'react-router-dom';
+import { returnPayloadId } from './../Login/AuthStorage'
+import { updatePassword } from './API'
+import { returnPayloadEmail } from './../Login/AuthStorage'
 import config from './../../config'
 
 
