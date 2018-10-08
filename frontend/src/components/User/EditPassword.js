@@ -93,7 +93,7 @@ class EditUser extends Component {
         if(dataToSend.user.email === null || dataToSend.user.password === null ||
             password_toSend.password_confirm === null || password_toSend.password_new === null){
 
-            return alert("Campos obrigatorios de Senha")
+            return alert("You must fill in the password fields")
 
         }else if(this.state.validate_pass === false){
             return

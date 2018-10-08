@@ -11,16 +11,14 @@ import config from "./../../config"
 
 class EditUser extends Component {
 
-    
+
     state = {
         user:{
-        password_new:Null,
-        password_old:undefined,
-        password_confirm:undefined
-
-        },
-        logged: false,
-        error:null
+        email: null,
+        first_name: null,
+        last_name: null,
+        personal_phone: null
+        }
     }
 
     /** Watch the changes in the field input Email*/
@@ -74,14 +72,21 @@ class EditUser extends Component {
         const { email, first_name, last_name, personal_phone} = this.state.user;
         
         try {
-        
+            if(email === null ||
+                first_name === null ||
+                last_name === null||
+                personal_phone === null){
+                    alert("You must fill in all fields")
+                    return
+            }else{
             const id = returnPayloadId()
-            const { data } = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);            
+            await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);            
             
             //Redirect to /user
             this.redirectPage()
             
-            return data;
+            return 
+        }
             
         } catch (error) {            
              return error
