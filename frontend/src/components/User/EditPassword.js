@@ -12,9 +12,9 @@ class EditUser extends Component {
     
     state = {
         user:{
-        password_new: undefined,
-        password_old: undefined,
-        password_confirm: undefined
+        password_new: null,
+        password_old: null,
+        password_confirm: null
 
         },
         validate_pass: false,
@@ -77,11 +77,9 @@ class EditUser extends Component {
     
     handleSubmit = async (e) => {
         e.preventDefault();
-        this.validarSenha()
+        await this.validarSenha()
         try {
         
-        
-
         const email_send = returnPayloadEmail()
         const password_toSend = this.state.user
          //Dates to Login
@@ -91,7 +89,7 @@ class EditUser extends Component {
                 password: this.state.user.password_old
             }
         }
-        // console.log(dataToSend)
+        
         if(dataToSend.user.email === null || dataToSend.user.password === null ||
             password_toSend.password_confirm === null || password_toSend.password_new === null){
 
@@ -100,7 +98,7 @@ class EditUser extends Component {
         }else if(this.state.validate_pass === false){
             return
          }else{
-        // console.log(JSON.stringify(dataToSend))
+        
         //URL for authentication
         let url = 'http://localhost:4000/users/auth'
 
@@ -123,14 +121,12 @@ class EditUser extends Component {
                     })
                     if(this.state.logged){
                         const payloadId = returnPayloadId()
-                        console.log("entrou no creat do ID")
                         const password = this.state.user.password_new
-                        console.log("essa é a senha "+ this.state.user.password_new)
                         const { data } =  updatePassword(payloadId, password);
                         this.redirectPage()
-                        console.log(data)
                         
-                        return data;}
+                        return data;
+                    }
                     
                 }else{
                    alert("Password invalid")
@@ -138,9 +134,6 @@ class EditUser extends Component {
             }).catch(err => this.setState({ error: err }))
         }
         
-                
-        
-
         } catch (error) {
             
              return error

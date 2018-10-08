@@ -14,7 +14,7 @@ class EditUser extends Component {
     
     state = {
         user:{
-        password_new:undefined,
+        password_new:Null,
         password_old:undefined,
         password_confirm:undefined
 
