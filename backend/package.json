@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "backend_api_users",
   "version": "1.0.0",
-  "description": "API Backend",
+  "description": "API Backend with mongodb",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
@@ -12,19 +12,16 @@
     "lint:fix": "eslint . --fix"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ewerton Luan",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^2.0.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "express-jwt": "^5.3.1",
-    "helmet": "^3.13.0",
     "joigoose": "^4.0.2",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.17",
-    "morgan": "^1.9.1"
+    "mongoose": "^5.2.17"
   },
   "devDependencies": {
     "@types/joi": "^13.6.0",
@@ -33,7 +30,6 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "joi": "^13.7.0",
-    "joi-assert": "0.0.3",
     "nodemon": "^1.18.4"
   }
 }

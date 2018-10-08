@@ -1,22 +1,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import helmet from 'helmet';
 import mongoose from 'mongoose';
-// import morgan from 'morgan';
 import cors from 'cors';
 import routes from './api';
 import config from './config'
 
-// import expressJWT from 'express-jwt'
-
 
 const app = express();
 
-// app.use(expressJWT({ secret: config.JWT_KEY }).unless({ path: ['/api/users/']})) 
-// app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(helmet());
 app.use(cors());
 
 

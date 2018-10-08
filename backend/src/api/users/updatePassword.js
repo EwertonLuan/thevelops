@@ -3,12 +3,11 @@ import bcrypt from 'bcrypt'
 import config from '../../config'
 
 
-
-
 export default async (req, res) => {
     /**Reiceve a ID and a new password after do it login */
     const { id } = req.params;
     const password_new = req.body
+    
     
     const salt = await bcrypt.genSaltSync(config.JWT_SALT)
     
