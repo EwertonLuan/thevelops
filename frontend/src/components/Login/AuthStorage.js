@@ -1,36 +1,36 @@
-import config from "./../../config"
-import jwt from 'jsonwebtoken'
+import config from "./../../config";
+import jwt from 'jsonwebtoken';
 
-const TOKEN = config.TOKEN
+const TOKEN = config.TOKEN;
 
 const setAuthToken = (token) => {
-	localStorage.setItem(TOKEN, token)
-}
+	localStorage.setItem(TOKEN, token);
+};
 
 /**Get Token in localStorage and return ID */
 const returnPayloadId = () => {
 	if(localStorage.getItem(TOKEN)){
-		const payload =jwt.decode(localStorage.getItem(TOKEN))
-		return payload.id
+		const payload =jwt.decode(localStorage.getItem(TOKEN));
+		return payload.id;
 	}else{
-		return
+		return;
 	}
-}
+};
 /**Get Token in localStorage and return email */
 const returnPayloadEmail = () => {
-	const payload =jwt.decode(localStorage.getItem(TOKEN))
-	return payload.email
-}
+	const payload =jwt.decode(localStorage.getItem(TOKEN));
+	return payload.email;
+};
 
 /**Verify localStorage and get token, if don't have redirect for "/" */
 const isLoggedIn = () => {
-		return !! localStorage.getItem(TOKEN)	
-}
+	return !! localStorage.getItem(TOKEN);	
+};
 
 /**Delete token */
 const clearAuthToken = () => {
-	return localStorage.removeItem(TOKEN)
-}
+	return localStorage.removeItem(TOKEN);
+};
 
 export {
 	returnPayloadId,
@@ -38,4 +38,4 @@ export {
 	isLoggedIn,
 	clearAuthToken,
 	returnPayloadEmail
-}
+};

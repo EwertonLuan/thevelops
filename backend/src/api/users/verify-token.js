@@ -1,31 +1,31 @@
-import config from '../../config'
-import jwt from 'jsonwebtoken'
+import config from '../../config';
+import jwt from 'jsonwebtoken';
 
 
 export default async (req, res) => {
-    try {
+	try {
 
-        /**Save the toke in the Header*/
+		/**Save the toke in the Header*/
 
-        const token = req.headers['authorization'].split(' ')[1]
+		const token = req.headers['authorization'].split(' ')[1];
         
-        /**Validate Token, config.JWT_KEY it's your private key*/
-        jwt.verify(token, config.JWT_KEY, (err, decode) => {
-            if(!err){
-                res.json({
-                    success: true,
-                    message: "Token is valid."
-                });
-            } else {
-                res.status(401).json({
-                    success: false,
-                    error: err
-                });
-            }
-        })
+		/**Validate Token, config.JWT_KEY it's your private key*/
+		jwt.verify(token, config.JWT_KEY, (err, decode) => {
+			if(!err){
+				res.json({
+					success: true,
+					message: "Token is valid."
+				});
+			} else {
+				res.status(401).json({
+					success: false,
+					error: err
+				});
+			}
+		});
 
-    } catch (error) {
+	} catch (error) {
         
-        return res.status(500).json({ error });
-    }
-}
+		return res.status(500).json({ error });
+	}
+};

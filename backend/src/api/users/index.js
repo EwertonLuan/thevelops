@@ -4,17 +4,17 @@ import findOne from './find-by-id';
 import create from './create';
 import remove from './remove';
 import update from './update';
-import findUser from './find-one'
+import findUser from './find-one';
 import auth from './auth';
-import verifyToken from './verify-token'
-import updatePassword from './updatePassword'
+import verifyToken from './verify-token';
+import updatePassword from './updatePassword';
 
 const router = Router();
 
 /**Route API for Verify the token validate */
 
 //GET /users/verify
-router.get('/verify', verifyToken)
+router.get('/verify', verifyToken);
 
 /** Route API for show all uses in the  */
 
@@ -49,13 +49,13 @@ router.put('/:id/change', updatePassword);
 /**Autentication route */
 
 //POST /users/auth
-router.post('/auth', auth) 
+router.post('/auth', auth); 
 
 
 /**Login route */
 
 //POST /users/login
-router.post('/login', findUser)
+router.post('/login', findUser);
 
 
 export default router;
