@@ -80,8 +80,10 @@ class EditUser extends Component {
     			return;
     		}else{
     			const id = returnPayloadId();
-    			await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);            
-            
+    			const update = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);
+				          
+    			if(update.data.name === 'ValidationError') return alert("Invalid data");
+				
     			//Redirect to /user
     			this.redirectPage();
             
@@ -122,7 +124,7 @@ class EditUser extends Component {
     							</div>
     							<div className="form-group">
     								<label >Personal Phone</label>
-    								<input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="personhal-phone" placeholder="Personal Phone" />
+    								<input type="text" onChange={this.handlePersonalPhoneChange} className="form-control" id="personhal-phone" placeholder="Phone ex:(13) 99999-9999" />
     							</div>
     							<button type="submit" onClick={this.handleSubmit} className="btn btn-secondary btn-block">Submit</button>
     							<button type="submit" onClick={this.DeleteUser} className="btn btn-secondary btn-block">Delete User</button>

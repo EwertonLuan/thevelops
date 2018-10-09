@@ -20,10 +20,11 @@ export default async (req, res, next) => {
 			const result = await User.findOne({email});
         
         
-			/**Confirm if find the email,
-         * Compare the password with the password in the database,
-         * Generate a token with email
-         * */
+		/**Confirm if find the email,
+		 *  Compare the password with the password in the database,
+		 *  Generate a token with email
+		 * */
+         
         
 			if (result !== null && bcrypt.compareSync(password, result.password)){
             
