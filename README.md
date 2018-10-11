@@ -169,15 +169,15 @@ UserJoi = joi.object({
 
 Route React:
 
-```sh / <Login/> ``` Link to login page home page ("/") if don't be logged.
+`/ <Login/>` Link to login page home page ("/") if don't be logged.
  
-```sh /signup {NewUser}``` Link to creat a new user after redirect to "Get User" page.
+`/signup {NewUser}` Link to creat a new user after redirect to "Get User" page.
 
-```sh /user <GetUSer/>``` Show informations about the user and the buttons for Edit, Change password and Logout.
+` /user <GetUSer/>` Show informations about the user and the buttons for Edit, Change password and Logout.
 
-```sh /user/edit  <EditUser/>```sh  Can edite informations about the user and show the button Delete.
+` /user/edit  <EditUser/>`  Can edite informations about the user and show the button Delete.
 
-```sh /user/edit_password <EditPassword/>```  Change current password.
+` /user/edit_password <EditPassword/>`  Change current password.
 
 
 
