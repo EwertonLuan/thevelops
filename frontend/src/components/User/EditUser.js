@@ -80,12 +80,11 @@ class EditUser extends Component {
     			return;
     		}else{
     			const id = returnPayloadId();
-    			const update = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);
-				          
-    			if(update.data.name === 'ValidationError') return alert("Invalid data");
+    			const update = await findByIdAndUpdate(id ,email, first_name, last_name, personal_phone);				          
+    			if(update.data.error) return alert(update.data.error);
 				
     			//Redirect to /user
-    			this.redirectPage();
+    			// this.redirectPage();
             
     			return; 
     		}

@@ -20,7 +20,7 @@ export default async (req, res, next) => {
 			const result = await User.findOne({email});
         
         
-		/**Confirm if find the email,
+			/**Confirm if find the email,
 		 *  Compare the password with the password in the database,
 		 *  Generate a token with email
 		 * */

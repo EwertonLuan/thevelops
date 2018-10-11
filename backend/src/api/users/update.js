@@ -1,6 +1,6 @@
 import User from '../../models/User';
-import joi from 'joi'
-import JoiUpdate from './../../models/JoiUpdate'
+import joi from 'joi';
+import JoiUpdate from './../../models/JoiUpdate';
 export default async (req, res, next) => {
 	
 	// console.log(req.body)
@@ -14,9 +14,9 @@ export default async (req, res, next) => {
 	try 
 	{   
 
-		const ratings = await JoiUpdate.validate(req.body)
+		const ratings = await JoiUpdate.validate(req.body);
 
-		if(ratings.error) throw (ratings.error.message)
+		if(ratings.error) throw (ratings.error.message);
 		
 		/** Receive data for update users */
 
@@ -24,7 +24,7 @@ export default async (req, res, next) => {
 
 		
 
-			await User.findByIdAndUpdate(id, {
+		await User.findByIdAndUpdate(id, {
 			email: new_datas.email,
 			first_name: new_datas.first_name,
 			last_name: new_datas.last_name,
@@ -34,8 +34,8 @@ export default async (req, res, next) => {
 			res.send(tank);
 		});           
 	} catch (error) {
+		console.log({error: error.message});
 		
-		
-		return res.send(error);
+		return res.send({error: error.message});
 	}
 };
