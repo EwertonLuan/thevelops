@@ -8,7 +8,6 @@ export default async (req, res) => {
 	const { id } = req.params;
 	const password_new = req.body;
     
-    
 	const salt = await bcrypt.genSaltSync(config.JWT_SALT);
     
 	/**Password with Hash */

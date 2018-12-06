@@ -4,9 +4,9 @@ import config from './../../config';
 import bcrypt from 'bcrypt';
 
 export default async (req, res, next) => {
-
+	
 	/**email and password for validation login */
-	const { email, password} = req.body.user;
+	const { email, password} = req.body;
         
 	try {
 		/**checks the value of the password and email*/
@@ -42,11 +42,11 @@ export default async (req, res, next) => {
 				res.status(401).json({
 					success: false,
 					code: 'DD101_API_ERROR_02',
-					message: 'User does not exists.'
+					message: 'User does not exists'
 				});
 			}
 		}
 	} catch (error) {
-		return res.status(500).json({ error: 'Invalid Password' });
+		return res.status(500).json({ error: error });
 	}
 };
