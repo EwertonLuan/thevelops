@@ -5,87 +5,75 @@ import { withRouter } from 'react-router-dom';
 import {login} from './API';
 import config from '../../config';
 
-
-
 class NewUser extends Component {
-    state = {
-    	user: {
-    		email: null,
-    		first_name: null,
-    		last_name: null,
-    		personal_phone: null,
-    		password:null,
-            
-    	},
-    	success:false,
-    	password_confirm:null,
-    	validate_pass: null,
-    	error: undefined
-        
-        
-    }
-    /** Watch the changes in the field input Email*/
-    hanleEmailChange = ({ target }) => {
-    	const { email, value } = target;
-    	const { user } =  this.state;
-    	this.setState( email, () => {
-    		user.email = value;
+
+	constructor() {
+		super();
+   
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.hanleEmailChange = this.hanleEmailChange.bind(this);
+		this.hanleFirstChange = this.hanleFirstChange.bind(this);
+		this.hanleLastChange = this.hanleLastChange.bind(this);
+		this.hanlePasswordChange = this.hanlePasswordChange.bind(this);
+		this.hanlePasswordConfirmChange = this.hanlePasswordConfirmChange.bind(this);
+		this.handlePersonalPhoneChange = this.handlePersonalPhoneChange.bind(this);
+
+		this.state = {		
+			email: null,
+			first_name: null,
+			last_name: null,
+			personal_phone: null,
+			password:null,
+			success:false,
+			password_confirm:null,
+			validate_pass: null,
+			error: undefined
+		};
+	}
+	static displayName = 'ui-LoginForm'
+
+	/** Watch the changes in the field input Email*/
+	hanleEmailChange (e) {
+    	this.setState( {
+    		email: e.target.value
     	});
-        
-    }
-    /** Watch the changes in the field First Name*/
-    hanleFirstChange = ({ target }) => {
-    	const { first_name, value } = target;
-    	const { user } = this.state;
-    	this.setState( first_name, () => {
-    		user.first_name = value;
+	}
+	/** Watch the changes in the field First Name*/
+	hanleFirstChange (e) {
+    	this.setState( {
+    		first_name: e.target.value
     	});
-        
-    }
+	}
     
-    /** Watch the changes in the field Last name*/
-    hanleLastChange = ({ target }) => {
-    	const { last_name, value } = target;
-    	const { user } =   this.state;
-    	this.setState( last_name, () => {
-    		user.last_name = value;
+	/** Watch the changes in the field Last name*/
+	hanleLastChange (e) {
+    	this.setState( {
+    		last_name: e.target.value
     	});
-        
-    } 
+	} 
 
-    /** Watch the changes in the field Password change*/
-    hanlePasswordChange = ({ target }) => {
-    	const { password, value } = target;
-    	const { user } =   this.state;
-        
-    	this.setState(password, () => {
-    		user.password = value;
-    	});
-        
-    }
+	/** Watch the changes in the field Password change*/
+	hanlePasswordChange (e) {
+    	this.setState( {
+			password: e.target.value
+		});
+	}
 
-    /** Watch the changes in the field Password confirm*/
-    hanlePasswordConfirmChange = ({ target }) => {
-    	const { password_confirm, value } = target;
-    	const { user } =   this.state;
-        
-    	this.setState(password_confirm, () => {
-    		user.password_confirm = value;
+	/** Watch the changes in the field Password confirm*/
+	hanlePasswordConfirmChange (e) {
+    	this.setState({
+			password_confirm: e.target.value
+		});
+	}
+	/** Watch the changes in the field Personal Phone*/
+	handlePersonalPhoneChange (e) {
+    	this.setState({
+    		personal_phone: e.target.value            
     	});
-    }
-    /** Watch the changes in the field Personal Phone*/
-    handlePersonalPhoneChange = ({ target }) => {
-    	const { personal_phone, value } = target;
-    	const { user } = this.state;
-    	this.setState(personal_phone, () =>{
-    		user.personal_phone = value;
-            
-    	});
-        
-    }
-    /** Validation Password*/
+	}
+	/** Validation Password*/
      validarSenha = () => {
-     	const change = this.state.user;
+     	const change = this.state;
      	if(change.password === change.password_confirm){
      		this.setState({
      			validate_pass: true
@@ -107,7 +95,7 @@ class NewUser extends Component {
     handleSubmit = async (e) => {
     	e.preventDefault();
 
-    	const { email, first_name, last_name, personal_phone, password } = this.state.user;
+    	const { email, first_name, last_name, personal_phone, password } = this.state;
         
     	this.validarSenha();
     	try{
@@ -120,15 +108,14 @@ class NewUser extends Component {
     			return;
     		} else if(this.state.validate_pass === false){
     			return; 
-    		}else{ 
-            
+    		}else{
     			const { data } = await create(email, first_name, last_name, personal_phone, password );
     			this.setState({success:true});
                 
-    			if(this.state.success) login(email, password);
-                
+    			if(this.state.success){
+    				await login({email, password});
+    			};
     			this.rediRedct();
-
     			return data;
     		}
     	} catch (error) {            
@@ -180,11 +167,9 @@ class NewUser extends Component {
     				</div>
     			</div>
     			<div className="col"/>
-                 
     		</div>
-           
-
-    	);}
+    	);
+    }
 }
 
 export default withRouter(NewUser);

@@ -5,24 +5,21 @@ import { findByid } from './API';
 import {returnPayloadId} from './../Login/AuthStorage';
 import {clearAuthToken} from './../Login/AuthStorage';
 
-
-
 class GetUser extends Component {
-    state = {
+	
+	state = {
     	user:{
-    		email: '',
-    		first_name: '',
-    		last_name: '',
-    		personal_phone: ''
-            
+    		email: undefined,
+    		first_name: undefined,
+    		last_name: undefined,
+    		personal_phone: undefined            
     	}
-    }
+	}
 
-    async componentDidMount() {
+	async componentDidMount() {
     	const user = await this.FindOne();
     	this.setState({user});
-  
-    }
+	}
 
     FindOne = async () => {
     	const payloadId = returnPayloadId();

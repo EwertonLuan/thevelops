@@ -24,7 +24,7 @@ const returnPayloadEmail = () => {
 
 /**Verify localStorage and get token, if don't have redirect for "/" */
 const isLoggedIn = () => {
-	return !! localStorage.getItem(TOKEN);	
+	return localStorage.getItem(TOKEN);	
 };
 
 /**Delete token */

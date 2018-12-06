@@ -4,63 +4,59 @@ import { returnPayloadId } from './../Login/AuthStorage';
 import { updatePassword } from './API';
 import { returnPayloadEmail } from './../Login/AuthStorage';
 import config from './../../config';
-
-
+import { login } from '../User/API';
 
 class EditUser extends Component {
 
+	constructor() {
+		super();
+   
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.hanlePasswordConfirmChange = this.hanlePasswordConfirmChange.bind(this);
+		this.hanlePasswordChangeNew = this.hanlePasswordChangeNew.bind(this);
+		this.hanlePasswordChange = this.hanlePasswordChange.bind(this);
     
-    state = {
+		this.state = {
     	user:{
     		password_new: null,
     		password_old: null,
     		password_confirm: null
 
-    	},
+    		},
     	validate_pass: false,
     	logged: false,
-    	error:''
-    }
+    	error: undefined
+		};
+	}
 
     static displayName = 'ui-LoginForm'
 
-    hanlePasswordChange = ({ target }) => {
-    	const { password_old, value } = target;
-    	const { user } =   this.state;
-        
-    	this.setState(password_old, () => {
-    		user.password_old = value;
-    	});
-        
+    hanlePasswordChange (e){
+    	this.setState({
+    		password_old: e.target.value
+    	});        
     }
 
-    hanlePasswordChangeNew = ({ target }) => {
-    	const { password_new, value } = target;
-    	const { user } =   this.state;
-        
-    	this.setState(password_new, () => {
-    		user.password_new = value;
-    	});
-        
+    hanlePasswordChangeNew(e) {
+    	this.setState({
+    		password_new: e.target.value
+    	});        
     }
 
-    hanlePasswordConfirmChange = ({ target }) => {
-    	const { password_confirm, value } = target;
-    	const { user } =   this.state;
-        
-    	this.setState(password_confirm, () => {
-    		user.password_confirm = value;
+    hanlePasswordConfirmChange(e) {
+    	this.setState({
+    		password_confirm: e.target.value
     	});
     }
 
     //Redirect the user for GET user page
     redirectPage() {
     	window.location.href = config.URL_LOCAL+'/user';
-        
     }
 
     validarSenha = () => {
-    	const change = this.state.user;
+    	const change = this.state;
+		
     	if(change.password_new === change.password_confirm){
     		this.setState({
     			validate_pass: true
@@ -73,76 +69,45 @@ class EditUser extends Component {
     		return; 
     	}
     }
-
-    
+	
     handleSubmit = async (e) => {
     	e.preventDefault();
     	await this.validarSenha();
     	try {
         
     		const email_send = returnPayloadEmail();
-    		const password_toSend = this.state.user;
+    		const password_toSend = this.state;
+			
     		//Dates to Login
     		let dataToSend = {
     			user: {
     				email: email_send,
-    				password: this.state.user.password_old
+    				password: this.state.password_old
     			}
     		};
         
     		if(dataToSend.user.email === null || dataToSend.user.password === null ||
             password_toSend.password_confirm === null || password_toSend.password_new === null){
-
     			return alert("You must fill in the password fields");
-
-    		}else if(this.state.validate_pass === false){
+    		} else if(this.state.validate_pass === false){
     			return;
-    		}else{
-        
-    			//URL for authentication
-    			let url = config.URL_API+'/users/auth';
-
-
-    			//Route from the Login to the Backend
-    			fetch(url, {
-    				method: "POST",
-    				body: JSON.stringify(dataToSend),
-    				headers: {
-    					"Content-Type": "application/json"
-    				}
-    			}).then(response => response.json())
-    				.then(responseJson => {
-    					//Change the Success State for true and set a Token in Local Storage
-    					if (responseJson.success) {
-                    
-    						this.setState({
-    							logged: true,
-    							error: undefined
-    						});
-    						if(this.state.logged){
-    							const payloadId = returnPayloadId();
-    							const password = this.state.user.password_new;
-    							const { data } =  updatePassword(payloadId, password);
-    							this.redirectPage();
-                        
-    							return data;
-    						}
-                    
-    					}else{
-    						alert("Password invalid");
-    					}
-    				}).catch(err => this.setState({ error: err }));
-    		}
-        
+    		} else {      				
+    			const login_auth = await login(dataToSend.user);
+    			if (login_auth.success) {
+    				const payloadId = returnPayloadId();
+    				const password = this.state.password_new;
+    				updatePassword(payloadId, password);
+    				this.redirectPage();
+    			}else{
+    				alert('Password invalid');
+    			}				
+    		}        
     	} catch (error) {
-            
-    		return error;
-    	}
-    
+    		console.log(error);
+    	}    
     }
-
+	
     render() {
-        
         
     	return (
     		<div className="row" style={{ paddingTop: '50px' }}>
@@ -169,18 +134,14 @@ class EditUser extends Component {
     							</div>
     							<button type="submit" onClick={this.handleSubmit} className="btn btn-secondary btn-block">Submit</button>
     							<br />
-                                
     						</form>
-
-
     					</div>
     				</div>
-
     			</div>
     			<div className="col"/>
     		</div>
-
-    	);}
+    	);
+    }
 }
 
 export default withRouter(EditUser);

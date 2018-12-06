@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import config from './../../config';
+import { login } from '../User/API';
 
 class LoginForm extends Component {
 
@@ -24,7 +25,8 @@ class LoginForm extends Component {
 				users: undefined,
 				error: undefined
             
-			}};
+			}
+		};
 	}
     //For can find in the React google app
     static displayName = 'ui-LoginForm'
@@ -38,55 +40,39 @@ class LoginForm extends Component {
     */
 
     //Formulario submit
-    handleSubmit(e) {
+    handleSubmit = async (e) => {
     	e.preventDefault();
+		
     	//Dates to Login
     	let dataToSend = {
-    		user: {
     			email: this.state.email,
-    			password: this.state.password
-    		}
+    		password: this.state.password					
     	};
-
-    	if(dataToSend.user.email === undefined || dataToSend.user.password === undefined){
+		
+    	if(dataToSend.email === undefined || dataToSend.password === undefined){
     		return alert("Required fields Email/Senha");
     	}else{ 
-    		console.log(JSON.stringify(dataToSend));
-    		//URL for authentication
-    		let url = config.URL_API+'/users/auth';
-
-
-    		//Route from the Login to the Backend
-    		fetch(url, {
-    			method: "POST",
-    			body: JSON.stringify(dataToSend),
-    			headers: {
-    				"Content-Type": "application/json"
-    			}
-    		}).then(response => response.json())
-    			.then(responseJson => {
-    				//Change the Success State for true and set a Token in Local Storage
-    				if (responseJson.success) {
-    					localStorage.setItem('DD101_TOKEN', responseJson.token);
-    					this.setState({
-    						logged: true,
-    						error: undefined
-    					});
-    					//Page Reload
-    					this.reloadPage();
-                    
-    				}else{
-    					if(this.state.error === undefined) alert("Email or Password invalid");
-    				}
-    			}).catch(err => this.setState({ error: err }));
+    		const login_auth = await login(dataToSend);
+    		if (login_auth.success) {
+    			this.setState({
+    				logged: true,
+    				error: undefined
+    			});
+    			//Page Reload
+    			this.reloadPage();			
+    		}else{
+    			if(this.state.error === undefined) alert("Email or Password invalid");
+    		}
     	}
-    }
+	}
+	
     /**Make the change in the Email State*/
     handleEmailChange(e) {
     	this.setState({
     		email: e.target.value
     	});
-    }
+	}
+	
     /**Make the change in the Password state*/
     handlePasswordChange(e) {
     	this.setState({
@@ -96,8 +82,7 @@ class LoginForm extends Component {
     
     render() {
     	return (
-
-    		<div className="row" style={{ paddingTop: '50px' }}>
+     		<div className="row" style={{ paddingTop: '50px' }}>
     			<div className="col">
     			</div>
     			<div className="col">
@@ -123,7 +108,7 @@ class LoginForm extends Component {
     			</div>
     			<div className="col"/>
     		</div>
-        
-    	);}
+		);
+	}
 }
 export default withRouter(LoginForm);
