@@ -15,7 +15,7 @@
   "author": "Ewerton Luan",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^2.0.0",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "event-stream": "^3.3.4",
